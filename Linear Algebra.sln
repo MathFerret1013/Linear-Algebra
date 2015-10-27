@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linear Algebra", "Linear Algebra\Linear Algebra.csproj", "{105CD331-FB30-4516-AA25-7FA03EB121B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrices", "Matrices\Matrices.csproj", "{83B11112-750B-4B23-A21B-2D31189F9DAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matricies Tests", "Matricies Tests\Matricies Tests.csproj", "{F5F96058-155B-4E00-985F-52DEE358FF46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{105CD331-FB30-4516-AA25-7FA03EB121B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{105CD331-FB30-4516-AA25-7FA03EB121B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{105CD331-FB30-4516-AA25-7FA03EB121B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{105CD331-FB30-4516-AA25-7FA03EB121B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B11112-750B-4B23-A21B-2D31189F9DAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B11112-750B-4B23-A21B-2D31189F9DAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B11112-750B-4B23-A21B-2D31189F9DAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B11112-750B-4B23-A21B-2D31189F9DAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5F96058-155B-4E00-985F-52DEE358FF46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5F96058-155B-4E00-985F-52DEE358FF46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5F96058-155B-4E00-985F-52DEE358FF46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5F96058-155B-4E00-985F-52DEE358FF46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
