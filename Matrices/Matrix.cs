@@ -276,10 +276,17 @@
             }
         }
 
+        /// <summary>
+        /// Implements <see cref="IEquatable"/> of <see cref="Matrix"/>.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(Matrix other)
         {
-            return this.Columns == other.Columns && this.Rows == other.Rows
-                   && this.internalArray.SequenceEqual(other.internalArray);
+            // Note that elements fo the internal array are compared with a custom EqualityComparer
+            return this.Columns == other.Columns 
+                   && this.Rows == other.Rows
+                   && this.internalArray.SequenceEqual(other.internalArray, new DoubleEqualityComparer());
         }
 
         public override string ToString()

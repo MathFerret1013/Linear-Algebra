@@ -1,19 +1,18 @@
 ﻿namespace Matrices
 {
     using System;
-    using System.Globalization;
     using System.Linq;
 
     public static class MatrixOperations
     {
-        private const double TOLERANCE = 0.00001;
+        private const double TOLERANCE = 1E-15;
 
         /// <summary>
         /// Multiplies two maricies together
         /// </summary>
         /// <param name="A"></param>
         /// <param name="B"></param>
-        /// <returns>The product of the matricies</returns>
+        /// <returns>The product of the matrices</returns>
         public static Matrix Multiply(this Matrix A, Matrix B)
         {
             var matrix = new Matrix(A.Rows, B.Columns);
@@ -198,7 +197,7 @@
             {
                 var currentStartElement = matrix[i, currentCol];
 
-                if (Math.Abs(currentStartElement) > TOLERANCE) // if a_ii ~= 0
+                if (Math.Abs(currentStartElement) > TOLERANCE)
                 {
                     for (int j = i + 1; j < iMax; j++)
                     {
@@ -208,11 +207,52 @@
                 }
                 else
                 {
-                    i--; // The test element was zero, done increment the row
+                    i--; // The test element was zero, do not increment the row
                 }
             }
 
             return matrix;
+        }
+
+        /// <summary>
+        /// Computes the reduced row echelon form of the matrix.
+        /// </summary>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static Matrix ReducedRowEchelonForm(Matrix matrix)
+        {
+            var gaussElimResult = MatrixOperations.GaussianElimination(matrix);
+
+            int iMax = Math.Min(gaussElimResult.Columns, gaussElimResult.Rows);
+            for (int i = 0, currentCol = 0; i < iMax && currentCol < gaussElimResult.Columns; i++, currentCol++)
+            {
+                var currentStartElement = gaussElimResult[i, currentCol];
+
+                if (Math.Abs(currentStartElement) > TOLERANCE) 
+                {
+                    // If the current start element does not equal 1 then fix it
+                    if (Math.Abs(currentStartElement - 1) > TOLERANCE)
+                    {
+                        gaussElimResult = MatrixOperations.MultiplyRowByScalar(gaussElimResult, i, 1.0 / currentStartElement);
+                    }
+
+                    for (int j = 0; j <= i - 1; j++)
+                    {
+                        var modifiedRow =
+                            gaussElimResult.GetRow(i)
+                                .Select(m => -1 * m * (gaussElimResult[j, currentCol] * gaussElimResult[i, currentCol]))
+                                .ToArray();
+                        gaussElimResult = MatrixOperations.AddRows(gaussElimResult, modifiedRow, j);
+                    }
+                }
+                else
+                {
+                    i--; // The test element was zero, do not increment the row
+                }
+
+            }
+
+            return gaussElimResult;
         }
 
         #endregion

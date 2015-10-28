@@ -149,5 +149,38 @@
 
         }
 
+        /// <summary>
+        /// Tests calculating the reduced row echelon form.
+        /// 
+        /// Results are compared against Mathematica RowReduce function
+        /// </summary>
+        [Test]
+        public void ReducedRowEchelonFormTest()
+        {
+            var test_1 = new Matrix(new double[,]
+                            {
+                                            { 1, 2, 3 },
+                                            { 4, 5, 6 },
+                                            { 7, 8, 9 }
+                            });
+
+            var test_1_Result = new Matrix(new double[,]
+                {
+                                            { 1, 0, -1 },
+                                            { 0, 1, 2 },
+                                            { 0, 0, 0 }
+                });
+
+            var test_2 = new Matrix(new double[,] { { 1, 2, 3, 4, 5 }, { 6, 7, 8, 9, 10 } });
+            var test_2_Result = new Matrix(new double[,] { { 1, 0, -1, -2, -3}, { 0, 1, 2, 3, 4} });
+
+
+            var test_3 = new Matrix(new double[,] { { 1, 2, 1, 2, 1 }, { 2, 4, 4, 8, 4 }, { 3, 6, 5, 7, 7 } });
+            var test_3_Result = new Matrix(new double[,] { { 1, 2, 0, 0, 0 }, { 0, 0, 1, 0, 7.0 / 3.0 }, { 0, 0, 0, 1, -2.0 / 3.0 } } );
+
+            Assert.That(MatrixOperations.ReducedRowEchelonForm(test_1), Is.EqualTo(test_1_Result));
+            Assert.That(MatrixOperations.ReducedRowEchelonForm(test_2), Is.EqualTo(test_2_Result));
+            Assert.That(MatrixOperations.ReducedRowEchelonForm(test_3), Is.EqualTo(test_3_Result));
+        }
     }
 }

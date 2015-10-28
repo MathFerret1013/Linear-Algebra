@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="ArrayUtilities.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="DoubleEqualityComparer.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="MatrixOperations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
