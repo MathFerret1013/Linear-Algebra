@@ -7,8 +7,8 @@
     <ProjectGuid>{F5F96058-155B-4E00-985F-52DEE358FF46}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Matricies_Tests</RootNamespace>
-    <AssemblyName>Matricies Tests</AssemblyName>
+    <RootNamespace>Matrix_Tests</RootNamespace>
+    <AssemblyName>Matrix Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
