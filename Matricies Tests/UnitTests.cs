@@ -182,5 +182,23 @@
             Assert.That(MatrixOperations.ReducedRowEchelonForm(test_2), Is.EqualTo(test_2_Result));
             Assert.That(MatrixOperations.ReducedRowEchelonForm(test_3), Is.EqualTo(test_3_Result));
         }
+
+        /// <summary>
+        /// Tests calculating the rank of a matrix.
+        /// 
+        /// Results are compared against Mathematica MatrixRank function
+        /// </summary>
+        [Test]
+        public void RankTest()
+        {
+
+            var test1 = new Matrix(new double[,] { { 0, 0, 2 }, { 1, -1, 1 }, { -1, 1, 4} });
+            var test2 = new Matrix(new double[,] { { 1, -2, 1 }, { 2, -4, 2 }, { -1, 2, -1 } });
+            var test3 = new Matrix(new double[,] { { 1, 2, 3 }, { 1, 3, 0 }, { 7, 8, 9 } });
+
+            Assert.That(MatrixOperations.Rank(test1), Is.EqualTo(2));
+            Assert.That(MatrixOperations.Rank(test2), Is.EqualTo(1));
+            Assert.That(MatrixOperations.Rank(test3), Is.EqualTo(3));
+        }
     }
 }

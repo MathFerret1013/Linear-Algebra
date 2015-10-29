@@ -255,6 +255,28 @@
             return gaussElimResult;
         }
 
+
+        public static int Rank(Matrix matrix)
+        {
+            var rref = ReducedRowEchelonForm(matrix);
+
+            var rank = 0;
+            for (int i = 0; i < rref.Rows; i++)
+            {
+                var currentRow = rref.GetRow(i);
+                for (int j = 0; j < currentRow.Length; j++)
+                {
+                    if (currentRow[j] != 0)
+                    {
+                        rank++;
+                        break;
+                    }
+                }
+            }
+
+            return rank;
+        }
+
         #endregion
     }
 }
