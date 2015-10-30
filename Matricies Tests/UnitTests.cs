@@ -1,5 +1,7 @@
 ﻿namespace Matrix_Tests
 {
+    using System;
+
     using Matrices;
 
     using NUnit.Framework;
@@ -85,6 +87,60 @@
             Assert.That(ex112_A * ex112_B, Is.EqualTo(ex112_Result));
             Assert.That(ex113_A * ex113_B, Is.EqualTo(ex113_Result));
 
+        }
+
+        /// <summary>
+        /// Tests matrix addition and subtraction.
+        /// </summary>
+        [Test]
+        public void MatrixAdditionSubtractionTest()
+        {
+            // Addition
+            var add_A = new Matrix(new double[,]
+                   {
+                                            { 2, 0 },
+                                            { 1, 2 },
+                                            { 1, 1 }
+                   });
+
+            var add_B = new Matrix(new double[,]
+                         {
+                                            { 5, -1 },
+                                            { 1, 1 },
+                                            { 9, 0 }
+                         });
+
+            var add_Result = new Matrix(new double[,]
+             {
+                                            { 7, -1 },
+                                            { 2, 3 },
+                                            { 10, 1 }
+             });
+
+            // Subtraction
+            var subtract_A = new Matrix(new double[,]
+                             {
+                                            { 2, 0 },
+                                            { 1, 2 },
+                                            { 1, 1 }
+                             });
+
+            var subtract_B = new Matrix(new double[,]
+                         {
+                                            { 5, -1 },
+                                            { 1, 1 },
+                                            { 9, 0 }
+                         });
+
+            var subtract_Result = new Matrix(new double[,]
+             {
+                                            { -3, 1 },
+                                            { 0, 1 },
+                                            { -8, 1 }
+             });
+
+            Assert.That(add_A + add_B, Is.EqualTo(add_Result));
+            Assert.That(subtract_A - subtract_B, Is.EqualTo(subtract_Result));
         }
 
         /// <summary>

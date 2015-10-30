@@ -213,6 +213,17 @@
         }
 
         /// <summary>
+        /// Subtracts two matrices.
+        /// </summary>
+        /// <param name="A">The first matrix</param>
+        /// <param name="B">The second matrix</param>
+        /// <returns>The difference of the two matrices</returns>
+        public static Matrix operator -(Matrix A, Matrix B)
+        {
+            return A.Difference(B);
+        }
+
+        /// <summary>
         /// Gets the specified rowIndex as an array.
         /// </summary>
         /// <param name="rowIndex">The zero-based index of the rowIndex.</param>

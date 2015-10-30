@@ -45,13 +45,29 @@
         /// </summary>
         /// <param name="A">The first matrix</param>
         /// <param name="B">The second matrix</param>
-        /// <returns>The sum of the wo matrices</returns>
+        /// <returns>The sum of the two matrices</returns>
         public static Matrix Sum(this Matrix A, Matrix B)
         {
             var matrix = new Matrix(A.Rows, A.Columns);
             for (int i = 0; i < A.internalArray.Length; i++)
             {
                 matrix.internalArray[i] = A.internalArray[i] + B.internalArray[i];
+            }
+            return matrix;
+        }
+
+        /// <summary>
+        /// Subtracts two matrices.
+        /// </summary>
+        /// <param name="A">The first matrix</param>
+        /// <param name="B">The second matrix</param>
+        /// <returns>The difference of the two matrices</returns>
+        public static Matrix Difference(this Matrix A, Matrix B)
+        {
+            var matrix = new Matrix(A.Rows, A.Columns);
+            for (int i = 0; i < A.internalArray.Length; i++)
+            {
+                matrix.internalArray[i] = A.internalArray[i] - B.internalArray[i];
             }
             return matrix;
         }
