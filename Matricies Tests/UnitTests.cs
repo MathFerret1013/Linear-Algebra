@@ -1,11 +1,9 @@
 ﻿namespace Matrix_Tests
 {
-    using System;
-
     using Matrices;
-
     using NUnit.Framework;
 
+    [TestFixture]
     public class UnitTests
     {
         /// <summary>
@@ -255,6 +253,37 @@
             Assert.That(MatrixOperations.Rank(test1), Is.EqualTo(2));
             Assert.That(MatrixOperations.Rank(test2), Is.EqualTo(1));
             Assert.That(MatrixOperations.Rank(test3), Is.EqualTo(3));
+        }
+
+        /// <summary>
+        /// Tests getting the transpose of a matrix
+        /// </summary>
+        [Test]
+        public void TransposeTest()
+        {
+            var a = new Matrix(new double[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } });
+            var aTranspose = new Matrix(new double[,] { { 1, 4, 7 }, { 2, 5, 8 }, { 3, 6, 9 } });
+
+            var b = new Matrix(new double[,] { { 1, 2, 3, 4 } });
+            var bTranspose = new Matrix(new double[,] { { 1 }, { 2}, { 3}, { 4 } });
+
+            Assert.That(a.GetTranspose(), Is.EqualTo(aTranspose));
+            Assert.That(b.GetTranspose(), Is.EqualTo(bTranspose));
+        }
+
+        /// <summary>
+        /// Tests the IsSymmetric property if a matrix.
+        /// </summary>
+        [Test]
+        public void SymmetryTest()
+        {
+            var a = new Matrix(new double[,] { { 1, 2, 3 }, { 2, 5, 6 }, { 3, 6, 9 } });
+            var b = new Matrix(new double[,] { { 1, 2, 3, 4 } });
+
+            Assert.That(a.IsSymmetric, Is.EqualTo(true));
+            Assert.That(b.IsSymmetric, Is.EqualTo(false));
+
+
         }
     }
 }

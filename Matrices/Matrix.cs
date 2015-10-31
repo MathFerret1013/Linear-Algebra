@@ -78,8 +78,15 @@
         }
 
 
-
+        /// <summary>
+        /// Returns <see langword="true" /> if the matrix is square.
+        /// </summary>
         public bool IsSquare => this.Columns == this.Rows;
+
+        /// <summary>
+        /// Returns <see langword="true" /> if the matrix is square and equal to its transpose.
+        /// </summary>
+        public bool IsSymmetric => this.IsSquare && this.Equals(this.GetTranspose());
 
         /// <summary>
         /// Number of rows the matrix has
