@@ -1,5 +1,8 @@
 ﻿namespace Matrix_Tests
 {
+    using System;
+    using System.Runtime.InteropServices;
+
     using Matrices;
     using NUnit.Framework;
 
@@ -282,7 +285,36 @@
 
             Assert.That(a.IsSymmetric, Is.EqualTo(true));
             Assert.That(b.IsSymmetric, Is.EqualTo(false));
+        }
 
+
+        [Test]
+        public void AugmentedReducedRowEchelonFormTest()
+        {
+            var A = new Matrix(new double[,] { { 1, 2, 3 }, { 0, 1, 4 }, { 5, 6, 0 } });
+            var I = A.GetIdentity();
+            var aug = new AugmentedMatrix(new Matrix[] { A, I });
+            var augGE = aug.ReducedRowEchelonForm();
+
+            var identity = new Matrix(new double[,] { { 1, 0, 0 }, { 0, 1, 0 }, { 0, 0, 1 } });
+            var inverse = new Matrix(new double[,] { { -24, 18, 5 }, { 20, -15, -4 }, { -5, 4, 1 } });
+            Assert.That(augGE[0], Is.EqualTo(identity));
+            Assert.That(augGE[1], Is.EqualTo(inverse));
+
+
+            var B = new Matrix(new double[,] { { 1, 2, 3, 6 }, { 0, 1, 4, 8 }, { 5, 6, 0, 9 }, { 9, 4, 7, 3 } });
+            I = new Matrix(4, 4).GetIdentity();
+            var aug2 =  new AugmentedMatrix(new Matrix[] {B, I});
+            var augRref2 = aug2.ReducedRowEchelonForm();
+
+            var identity2 = new Matrix(4, 4).GetIdentity();
+            var inverse2 = new Matrix(new double[,] { { -69.0 / 67.0, 36.0 / 67.0, 11.0 / 67.0, 9.0 / 67.0 }, 
+                                                    { 544.0 / 335.0, -69.0 / 67, -44.0 / 335.0, -36.0 / 335.0 }, 
+                                                    { 206.0 / 335.0, -18.0 / 67.0, -61.0 / 335.0, 11.0 / 335.0 }, 
+                                                    { -171.0 / 335.0, 26.0 / 67.0, 36.0 / 335.0, -1.0 / 335.0 } });
+
+            Assert.That(augRref2[0], Is.EqualTo(identity2));
+            Assert.That(augRref2[1], Is.EqualTo(inverse2));
 
         }
     }

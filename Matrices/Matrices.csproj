@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayUtilities.cs" />
+    <Compile Include="AugmentedMatrix.cs" />
+    <Compile Include="AugmentedMatrixOperations.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="DoubleEqualityComparer.cs" />
     <Compile Include="Matrix.cs" />
