@@ -1,4 +1,18 @@
-﻿namespace Matrices
+﻿// Copyright 2015 Eric Regina
+//  
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//  
+//     http://www.apache.org/licenses/LICENSE-2.0
+//  
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+namespace Matrices
 {
     using System;
     using System.Linq;
@@ -8,7 +22,7 @@
         private const double TOLERANCE = 1E-15;
 
         /// <summary>
-        /// Multiplies two maricies together
+        ///     Multiplies two maricies together
         /// </summary>
         /// <param name="A"></param>
         /// <param name="B"></param>
@@ -41,7 +55,7 @@
         }
 
         /// <summary>
-        /// Adds two matrices.
+        ///     Adds two matrices.
         /// </summary>
         /// <param name="A">The first matrix</param>
         /// <param name="B">The second matrix</param>
@@ -57,7 +71,7 @@
         }
 
         /// <summary>
-        /// Subtracts two matrices.
+        ///     Subtracts two matrices.
         /// </summary>
         /// <param name="A">The first matrix</param>
         /// <param name="B">The second matrix</param>
@@ -72,9 +86,8 @@
             return matrix;
         }
 
-
         /// <summary>
-        /// Computes the dot product of two vectors.
+        ///     Computes the dot product of two vectors.
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -89,8 +102,6 @@
 
             return sum;
         }
-
-
 
         #region Elementary Row Operations
 
@@ -119,8 +130,8 @@
         }
 
         /// <summary>
-        /// Performs the elementary row operation of assing two rows.
-        /// The <paramref name="addendRow"/> is the  row which is updated.
+        ///     Performs the elementary row operation of assing two rows.
+        ///     The <paramref name="addendRow" /> is the  row which is updated.
         /// </summary>
         /// <param name="matrix"></param>
         /// <param name="augendRow"></param>
@@ -137,8 +148,8 @@
         }
 
         /// <summary>
-        /// Performs the elementary row operation of assing two rows.
-        /// The <paramref name="addendRow"/> is the  row which is updated.
+        ///     Performs the elementary row operation of assing two rows.
+        ///     The <paramref name="addendRow" /> is the  row which is updated.
         /// </summary>
         /// <param name="matrix"></param>
         /// <param name="augendRow"></param>
@@ -159,7 +170,7 @@
         #region Gaussian Elimination
 
         /// <summary>
-        /// Performs gaussian elimination on the given matrix.
+        ///     Performs gaussian elimination on the given matrix.
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
@@ -194,17 +205,13 @@
             // Move this row into the top position
             if (nonZeroRowIndex != 0)
             {
-                matrix = MatrixOperations.SwapRows(matrix, nonZeroRowIndex, 0);
+                matrix = SwapRows(matrix, nonZeroRowIndex, 0);
             }
 
             // If the first non zero row does not equal 1 then normalize the 
             if (Math.Abs(matrix[0, nonZeroColumnIndex] - 1.0) > TOLERANCE)
             {
-
-                matrix = MatrixOperations.MultiplyRowByScalar(
-                    matrix,
-                    0,
-                    1.0 / matrix[0, nonZeroColumnIndex]);
+                matrix = MultiplyRowByScalar(matrix, 0, 1.0 / matrix[0, nonZeroColumnIndex]);
             }
 
             int iMax = Math.Min(matrix.Columns, matrix.Rows);
@@ -217,8 +224,11 @@
                 {
                     for (int j = i + 1; j < iMax; j++)
                     {
-                        var modifiedRow = matrix.GetRow(i).Select(m => -1 * m * (matrix[j, currentCol] / currentStartElement)).ToArray();
-                        matrix = MatrixOperations.AddRows(matrix, modifiedRow, j);
+                        var modifiedRow =
+                            matrix.GetRow(i)
+                                .Select(m => -1 * m * (matrix[j, currentCol] / currentStartElement))
+                                .ToArray();
+                        matrix = AddRows(matrix, modifiedRow, j);
                     }
                 }
                 else
@@ -231,25 +241,25 @@
         }
 
         /// <summary>
-        /// Computes the reduced row echelon form of the matrix.
+        ///     Computes the reduced row echelon form of the matrix.
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
         public static Matrix ReducedRowEchelonForm(Matrix matrix)
         {
-            var gaussElimResult = MatrixOperations.GaussianElimination(matrix);
+            var gaussElimResult = GaussianElimination(matrix);
 
             int iMax = Math.Min(gaussElimResult.Columns, gaussElimResult.Rows);
             for (int i = 0, currentCol = 0; i < iMax && currentCol < gaussElimResult.Columns; i++, currentCol++)
             {
                 var currentStartElement = gaussElimResult[i, currentCol];
 
-                if (Math.Abs(currentStartElement) > TOLERANCE) 
+                if (Math.Abs(currentStartElement) > TOLERANCE)
                 {
                     // If the current start element does not equal 1 then fix it
                     if (Math.Abs(currentStartElement - 1) > TOLERANCE)
                     {
-                        gaussElimResult = MatrixOperations.MultiplyRowByScalar(gaussElimResult, i, 1.0 / currentStartElement);
+                        gaussElimResult = MultiplyRowByScalar(gaussElimResult, i, 1.0 / currentStartElement);
                     }
 
                     for (int j = 0; j <= i - 1; j++)
@@ -258,19 +268,17 @@
                             gaussElimResult.GetRow(i)
                                 .Select(m => -1 * m * (gaussElimResult[j, currentCol] * gaussElimResult[i, currentCol]))
                                 .ToArray();
-                        gaussElimResult = MatrixOperations.AddRows(gaussElimResult, modifiedRow, j);
+                        gaussElimResult = AddRows(gaussElimResult, modifiedRow, j);
                     }
                 }
                 else
                 {
                     i--; // The test element was zero, do not increment the row
                 }
-
             }
 
             return gaussElimResult;
         }
-
 
         public static int Rank(Matrix matrix)
         {
