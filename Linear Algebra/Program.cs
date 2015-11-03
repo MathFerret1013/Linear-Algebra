@@ -23,17 +23,16 @@ namespace Linear_Algebra
         private static void Main(string[] args)
         {
             var A = new Matrix(new double[,] { { 1, 2, 3 }, { 0, 1, 4 }, { 5, 6, 0 } });
-            var I = A.GetIdentity();
+            var clone = A.Clone();
 
-            var aug = new AugmentedMatrix(new Matrix[] { A, I });
-            Console.WriteLine(aug);
+            A[0, 0] = -99;
 
-            var augGE = aug.ReducedRowEchelonForm();
-            Console.WriteLine(augGE);
+            Console.WriteLine(A);
+            Console.WriteLine(clone);
 
-            // Console.WriteLine(new Matrix(new double[,] { { 1, 2, 3 }, { 0, 1, 4 }, { 5, 6, 0 } }) * augGE[1]);
-
-            Console.WriteLine();
+            A[2, 2] = -88;
+            Console.WriteLine(A);
+            Console.WriteLine(clone);
             Console.Read();
         }
     }

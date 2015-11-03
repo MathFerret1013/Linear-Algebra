@@ -21,10 +21,17 @@ namespace Matrices
     /// </summary>
     public class AugmentedMatrix
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AugmentedMatrix"/> class representing an augmented matrix. All elementary row operations on an augmented matrix must be performed on the first
+        /// element of the <paramref name="matrices"/> array. In order to ensure that elementary row operations are erformed correctly, you must use the row operation methods for an <see cref="AugmentedMatrix"/> only.
+        /// </summary>
+        /// <param name="matrices">An array of <see cref="Matrix"/> objects.</param>
         public AugmentedMatrix(Matrix[] matrices)
         {
             this.Matricies = matrices;
         }
+
+        public int Count => this.Matricies.Length;
 
         public Matrix[] Matricies { get; }
 
@@ -34,13 +41,12 @@ namespace Matrices
             {
                 return this.Matricies[i];
             }
+
             set
             {
                 this.Matricies[i] = value;
             }
         }
-
-        public int Count => this.Matricies.Length;
 
         public override string ToString()
         {

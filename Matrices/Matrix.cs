@@ -21,7 +21,7 @@ namespace Matrices
     /// <summary>
     ///     Represents a matrix of real numbers
     /// </summary>
-    public class Matrix : IEquatable<Matrix>
+    public class Matrix : IEquatable<Matrix>, ICloneable
     {
         public Matrix(int rows, int columns)
         {
@@ -31,7 +31,7 @@ namespace Matrices
         }
 
         /// <summary>
-        ///     Creates a matrix from a 2D rectangular array.
+        ///     Creates a <see cref="Matrix" /> from a 2D rectangular array.
         /// </summary>
         /// <param name="matrix"></param>
         public Matrix(double[,] matrix)
@@ -43,7 +43,7 @@ namespace Matrices
         }
 
         /// <summary>
-        ///     Creates a matrix from an array and given dimensions
+        ///     Creates a <see cref="Matrix" /> from an array and given dimensions
         /// </summary>
         /// <param name="rows">The number of rows the matrix will have.</param>
         /// <param name="columns">The number of columns the matrix will have.</param>
@@ -71,22 +71,22 @@ namespace Matrices
         public bool IsSymmetric => this.IsSquare && this.Equals(this.GetTranspose());
 
         /// <summary>
-        ///     Number of rows the matrix has
+        ///     Number of rows the <see cref="Matrix" /> has
         /// </summary>
         public int Rows { get; private set; }
 
         /// <summary>
-        ///     Number of columns the matrix has
+        ///     Number of columns the <see cref="Matrix" /> has
         /// </summary>
         public int Columns { get; private set; }
 
         /// <summary>
-        ///     The internal single dimensional array that represents the matrix
+        ///     The internal single dimensional array that represents the <see cref="Matrix" />
         /// </summary>
         public double[] internalArray { get; private set; }
 
         /// <summary>
-        ///     Gets or sets the element  at rowIndex i, column j.
+        ///     Gets or sets the element at rowIndex <paramref name="i" />, column <paramref name="j" />.
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
@@ -101,18 +101,6 @@ namespace Matrices
             {
                 this.internalArray[this.Columns * i + j] = value;
             }
-        }
-
-        /// <summary>
-        ///     Implements <see cref="IEquatable" /> of <see cref="Matrix" />.
-        /// </summary>
-        /// <param name="other"></param>
-        /// <returns></returns>
-        public bool Equals(Matrix other)
-        {
-            // Note that elements fo the internal array are compared with a custom EqualityComparer
-            return this.Columns == other.Columns && this.Rows == other.Rows
-                   && this.internalArray.SequenceEqual(other.internalArray, new DoubleEqualityComparer());
         }
 
         /// <summary>
@@ -235,11 +223,11 @@ namespace Matrices
         }
 
         /// <summary>
-        ///     Multiplies a matrix by a scalar
+        ///     Multiplies a <see cref="Matrix" /> by a scalar
         /// </summary>
         /// <param name="scalar">The scalar</param>
-        /// <param name="B">tThe Matrix</param>
-        /// <returns>The product of the matrix and the scalar</returns>
+        /// <param name="B">The <see cref="Matrix" /></param>
+        /// <returns>The product of the <see cref="Matrix" /> and the scalar</returns>
         public static Matrix operator *(double scalar, Matrix B)
         {
             var array = new double[B.Rows * B.Columns];
@@ -254,8 +242,8 @@ namespace Matrices
         /// <summary>
         ///     Adds two matrices together.
         /// </summary>
-        /// <param name="A">The first matrix</param>
-        /// <param name="B">The second matrix</param>
+        /// <param name="A">The first <see cref="Matrix" /></param>
+        /// <param name="B">The second <see cref="Matrix" /></param>
         /// <returns>The sum of the two matrices</returns>
         public static Matrix operator +(Matrix A, Matrix B)
         {
@@ -265,8 +253,8 @@ namespace Matrices
         /// <summary>
         ///     Subtracts two matrices.
         /// </summary>
-        /// <param name="A">The first matrix</param>
-        /// <param name="B">The second matrix</param>
+        /// <param name="A">The first <see cref="Matrix" /></param>
+        /// <param name="B">The second <see cref="Matrix" /></param>
         /// <returns>The difference of the two matrices</returns>
         public static Matrix operator -(Matrix A, Matrix B)
         {
@@ -319,6 +307,18 @@ namespace Matrices
             return returnArray;
         }
 
+        public Matrix GetInverse()
+        {
+            if (!this.IsSquare)
+            {
+                throw new ArgumentException(
+                    "Inverses only exist for square matrices. See Lipschutz, Linear Algebra. 5th ed. pg. 34. or wikipedia.");
+            }
+
+            var augmentedMatix = new AugmentedMatrix(new Matrix[] { this, this.GetIdentity() });
+            return augmentedMatix.ReducedRowEchelonForm()[1];
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -333,6 +333,27 @@ namespace Matrices
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        ///     Implements Creates a deepcopy
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new Matrix(this.Rows, this.Columns, (double[])this.internalArray.Clone());
+        }
+
+        /// <summary>
+        ///     Implements IEquatable of <see cref="Matrix" />.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public bool Equals(Matrix other)
+        {
+            // Note that elements fo the internal array are compared with a custom EqualityComparer
+            return this.Columns == other.Columns && this.Rows == other.Rows
+                   && this.internalArray.SequenceEqual(other.internalArray, new DoubleEqualityComparer());
         }
     }
 }
